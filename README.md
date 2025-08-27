@@ -1,3 +1,3 @@
 # VEDA-Training---AWS-Data-Ingestion-Other
 
-Launch training document at https://kyle-lesinger.github.io/VEDA-Training---AWS-Data-Ingestion-Other/veda-training-presentation.html
+<a href="https://kyle-lesinger.github.io/VEDA-Training---AWS-Data-Ingestion-Other/veda-training-presentation.html">Launch training document</a>
