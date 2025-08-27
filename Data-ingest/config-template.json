@@ -1,0 +1,245 @@
+{
+  "__comment": "Complete configuration template for GHG Center dataset ingestion",
+  "__version": "1.0.0",
+  
+  "collection": {
+    "__description": "STAC Collection configuration",
+    "id": "your-dataset-id-here",
+    "type": "Collection",
+    "title": "Human-readable dataset title",
+    "description": "Comprehensive dataset description including methodology, sources, and applications",
+    "license": "CC-BY-4.0",
+    "stac_version": "1.0.0",
+    "stac_extensions": [
+      "https://stac-extensions.github.io/render/v1.0.0/schema.json",
+      "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+    ],
+    
+    "extent": {
+      "__comment": "Spatial and temporal coverage of the dataset",
+      "spatial": {
+        "bbox": [
+          [-180.0, -90.0, 180.0, 90.0]
+        ]
+      },
+      "temporal": {
+        "interval": [
+          ["2020-01-01T00:00:00Z", "2023-12-31T23:59:59Z"]
+        ]
+      }
+    },
+    
+    "providers": [
+      {
+        "name": "Data Provider Organization",
+        "url": "https://provider.website.org",
+        "roles": ["producer", "licensor"]
+      }
+    ],
+    
+    "item_assets": {
+      "__comment": "Define each asset (variable/layer) in your dataset",
+      "asset-name": {
+        "type": "image/tiff; application=geotiff; profile=cloud-optimized",
+        "roles": ["data", "layer"],
+        "title": "Asset Title",
+        "description": "Detailed description of what this asset represents"
+      }
+    },
+    
+    "dashboard:is_periodic": true,
+    "dashboard:time_density": "month",
+    "__time_density_options": ["day", "month", "year"],
+    
+    "renders": {
+      "__comment": "Visualization configuration for each asset",
+      "dashboard": {
+        "assets": ["asset-name"],
+        "colormap_name": "viridis",
+        "__colormap_options": ["viridis", "plasma", "jet", "rainbow", "RdBu_r", "coolwarm"],
+        "rescale": [
+          [0, 100]
+        ]
+      }
+    }
+  },
+  
+  "dataset": {
+    "__description": "Dataset discovery and ingestion configuration",
+    "collection": "your-dataset-id-here",
+    "data_type": "cog",
+    "__data_type_options": ["cog", "vector", "zarr"],
+    
+    "spatial_extent": {
+      "xmin": -180.0,
+      "ymin": -90.0,
+      "xmax": 180.0,
+      "ymax": 90.0
+    },
+    
+    "temporal_extent": {
+      "startdate": "2020-01-01T00:00:00Z",
+      "enddate": "2023-12-31T23:59:59Z"
+    },
+    
+    "discovery_items": [
+      {
+        "__comment": "Configuration for discovering data files in S3",
+        "discovery": "s3",
+        "bucket": "ghgc-data-store-develop",
+        "prefix": "transformed_cogs/your-dataset/",
+        "filename_regex": ".*pattern_.*.tif$",
+        "__regex_help": "Use regex to match your file naming pattern",
+        
+        "datetime_range": "month",
+        "__datetime_options": ["day", "month", "year", "custom"],
+        
+        "assets": {
+          "asset-name": {
+            "title": "Asset Title",
+            "description": "Asset description",
+            "regex": ".*specific_pattern.*.tif$"
+          }
+        },
+        
+        "id_regex": ".*_(\\d{6}).tif$",
+        "__id_regex_help": "Extract unique identifier from filename",
+        "id_template": "your-dataset-id-{}"
+      }
+    ],
+    
+    "is_periodic": true,
+    "time_density": "month"
+  },
+  
+  "discovery_items": {
+    "__description": "Simplified discovery configuration for production",
+    "collection": "your-dataset-id-here",
+    "bucket": "ghgc-data-store",
+    "prefix": "your-dataset/",
+    "filename_regex": ".*pattern.*.tif$",
+    "datetime_range": "month",
+    
+    "assets": {
+      "asset-name": {
+        "title": "Asset Title",
+        "description": "Asset description",
+        "regex": ".*pattern.*.tif$"
+      }
+    },
+    
+    "id_regex": ".*_(.*).tif$",
+    "id_template": "your-dataset-id-{}"
+  },
+  
+  "transfer": {
+    "__description": "Configuration for transferring data from development to production",
+    "collection": "your-dataset-id-here",
+    "origin_bucket": "ghgc-data-store-develop",
+    "origin_prefix": "transformed_cogs/your-dataset/",
+    "target_bucket": "ghgc-data-store",
+    "target_prefix": "your-dataset/",
+    "filename_regex": ".*pattern.*.tif$",
+    "__optional_fields": {
+      "checksum_validation": true,
+      "delete_after_transfer": false,
+      "parallel_transfers": 10
+    }
+  },
+  
+  "transformation": {
+    "__description": "Configuration for data transformation pipeline",
+    "source_format": "netcdf",
+    "__format_options": ["netcdf", "hdf5", "geotiff", "csv", "zarr"],
+    
+    "cog_profile": {
+      "driver": "COG",
+      "compress": "DEFLATE",
+      "__compress_options": ["DEFLATE", "LZW", "NONE", "ZSTD"],
+      "predictor": 2,
+      "__predictor_help": "1=none (for float), 2=horizontal (for int), 3=floating",
+      "zlevel": 6,
+      "tiled": true,
+      "blockxsize": 512,
+      "blockysize": 512,
+      "bigtiff": "IF_SAFER"
+    },
+    
+    "coordinate_transformation": {
+      "source_crs": "EPSG:4326",
+      "target_crs": "EPSG:4326",
+      "longitude_wrap": true,
+      "__wrap_help": "Convert from 0-360 to -180-180 if true"
+    },
+    
+    "value_transformation": {
+      "scale_factor": 1.0,
+      "add_offset": 0.0,
+      "nodata_input": -999999,
+      "nodata_output": -9999,
+      "units_conversion": null,
+      "__units_example": "kg/m2/s to tonne/km2/month"
+    },
+    
+    "variable_selection": {
+      "include": ["variable1", "variable2"],
+      "exclude": ["time_bounds", "lat_bounds"],
+      "rename_map": {
+        "original_name": "new_name"
+      }
+    },
+    
+    "temporal_processing": {
+      "extract_timesteps": true,
+      "date_format": "%Y%m",
+      "__format_options": "%Y%m%d, %Y%m, %Y, %Y-%m-%d",
+      "timezone": "UTC"
+    }
+  },
+  
+  "validation": {
+    "__description": "Data validation configuration",
+    "checks": {
+      "cog_valid": true,
+      "crs_valid": true,
+      "nodata_present": true,
+      "statistics_calculated": true
+    },
+    
+    "expected_statistics": {
+      "min": -100,
+      "max": 1000,
+      "mean_range": [0, 100],
+      "std_max": 500
+    },
+    
+    "file_requirements": {
+      "min_size_mb": 0.1,
+      "max_size_mb": 1000,
+      "required_bands": 1,
+      "compression_ratio_min": 0.1
+    }
+  },
+  
+  "metadata": {
+    "__description": "Additional metadata for documentation",
+    "source_url": "https://doi.org/10.xxxxx/dataset",
+    "publication_date": "2023-01-01",
+    "version": "v1.0",
+    "update_frequency": "monthly",
+    "contact": {
+      "name": "Dataset Contact",
+      "email": "contact@organization.org"
+    },
+    
+    "citations": [
+      "Author et al. (2023). Dataset Title. Journal. DOI:10.xxxxx"
+    ],
+    
+    "keywords": [
+      "climate",
+      "emissions",
+      "greenhouse gases"
+    ]
+  }
+}
