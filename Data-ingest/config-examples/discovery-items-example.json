@@ -1,0 +1,16 @@
+{
+    "collection": "odiac-ffco2-monthgrid-v2023",
+    "bucket": "ghgc-data-store",
+    "prefix": "odiac-ffco2-monthgrid-v2023/",
+    "filename_regex": ".*odiac2023_1km_.*.tif$",
+    "datetime_range": "month",
+    "assets": {
+        "co2-emissions": {
+            "title": "Fossil Fuel CO₂ Emissions",
+            "description": "Model-estimated monthly, 1 km resolution CO₂ emissions from fossil fuel combustion, cement production and gas flaring created using space-based nighttime light data and individual power plant emission/location profiles.",
+            "regex": ".*odiac2023_1km_.*.tif$"
+        }
+    },
+    "id_regex": ".*_(.*).tif$",
+    "id_template": "odiac-ffco2-monthgrid-v2023-{}"
+}

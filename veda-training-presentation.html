@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VEDA Training Presentation</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/white.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/monokai.min.css">
+    
+    <style>
+        .reveal h1, .reveal h2, .reveal h3 {
+            color: #2c3e50;
+        }
+        .reveal .slides section {
+            text-align: left;
+        }
+        .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+            text-align: center;
+        }
+        .reveal ul {
+            display: block;
+            margin-left: 1em;
+        }
+        .reveal .progress {
+            color: #2c3e50;
+        }
+        .highlight-blue {
+            color: #3498db;
+            font-weight: bold;
+        }
+        .small-text {
+            font-size: 0.8em;
+        }
+        .center {
+            text-align: center;
+        }
+        .reveal a {
+            color: #3498db;
+        }
+        .reveal a:hover {
+            color: #2c3e50;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            
+            <!-- Title Slide -->
+            <section>
+                <h1>VEDA Platform Training</h1>
+                <h3>Visualization, Exploration and Data Analysis</h3>
+                <p class="center">A comprehensive guide to NASA's redeployable data platform</p>
+                <p class="center small-text">Navigate: Use arrow keys or swipe</p>
+            </section>
+            
+            <!-- INTRODUCTION SLIDES -->
+            <!-- Intro Slide 1: What is VEDA -->
+            <section>
+                <h2>1. Introduction: What is VEDA?</h2>
+                <ul>
+                    <li><span class="highlight-blue">Purpose:</span> NASA-developed redeployable data platform for scientific visualization and analysis</li>
+                    <li><span class="highlight-blue">Mission:</span> Enable researchers to engage new audiences and share analysis results effectively</li>
+                    <li><span class="highlight-blue">Approach:</span> Combines interactive storytelling with open science principles</li>
+                    <li><span class="highlight-blue">Target Users:</span> Researchers, data scientists, and scientific computing professionals</li>
+                </ul>
+                <p class="small-text">Learn more: <a href="https://docs.openveda.cloud/" target="_blank">https://docs.openveda.cloud/</a></p>
+            </section>
+            
+            <!-- Intro Slide 2: Key Features -->
+            <section>
+                <h2>1. Introduction: Key Features</h2>
+                <ul>
+                    <li><span class="highlight-blue">Scientific Computing:</span> Powerful computational resources for analysis</li>
+                    <li><span class="highlight-blue">Data Services:</span> Access and management of earth observation data</li>
+                    <li><span class="highlight-blue">JupyterHub Service:</span> Cloud-based notebook environments</li>
+                    <li><span class="highlight-blue">Interactive Tools:</span> Visualization and exploration capabilities</li>
+                    <li><span class="highlight-blue">Open Source:</span> Built on open-source software ecosystem</li>
+                </ul>
+                <p class="small-text">Documentation: <a href="README.md" target="_blank">README.md</a></p>
+            </section>
+            
+            <!-- Intro Slide 3: Platform Components -->
+            <section>
+                <h2>1. Introduction: Platform Components</h2>
+                <ul>
+                    <li><span class="highlight-blue">Content Curation:</span> Tools for organizing and presenting data</li>
+                    <li><span class="highlight-blue">Data Services:</span> APIs and data access mechanisms</li>
+                    <li><span class="highlight-blue">Example Notebooks:</span> Pre-built analysis workflows</li>
+                    <li><span class="highlight-blue">Geospatial Resources:</span> Earth and environmental datasets</li>
+                    <li><span class="highlight-blue">Usage Examples:</span> Tutorials and best practices</li>
+                </ul>
+                <p class="center">Democratizing scientific data exploration through user-friendly tools</p>
+                <p class="small-text">Full docs: <a href="https://docs.openveda.cloud/" target="_blank">VEDA Documentation Portal</a></p>
+            </section>
+            
+            <!-- STAC BROWSER SLIDES -->
+            <!-- STAC Slide 1: Understanding STAC -->
+            <section>
+                <h2>2. STAC Browser: Understanding STAC</h2>
+                <ul>
+                    <li><span class="highlight-blue">Definition:</span> SpatioTemporal Asset Catalog - the "HTML of geospatial data"</li>
+                    <li><span class="highlight-blue">Purpose:</span> Standardized way to describe and discover Earth observation data</li>
+                    <li><span class="highlight-blue">Benefits:</span> Interoperability, discoverability, efficiency, scalability</li>
+                    <li><span class="highlight-blue">Problem Solved:</span> Unified integration across multiple data providers</li>
+                </ul>
+                <pre><code class="small-text">Search any STAC catalog with same syntax:
+catalog.search(bbox=[-180, -90, 180, 90], datetime="2024-01")</code></pre>
+                <p class="small-text">Guide: <a href="STAC/stac-training-guide.md" target="_blank">STAC/stac-training-guide.md</a></p>
+            </section>
+            
+            <!-- STAC Slide 2: STAC Hierarchy -->
+            <section>
+                <h2>2. STAC Browser: Hierarchy & Components</h2>
+                <ul>
+                    <li><span class="highlight-blue">Catalog:</span> Top-level entry point to dataset</li>
+                    <li><span class="highlight-blue">Collection:</span> Groups of related items (e.g., Landsat-8)</li>
+                    <li><span class="highlight-blue">Item:</span> Single spatiotemporal dataset (satellite scene)</li>
+                    <li><span class="highlight-blue">Assets:</span> Actual files (data, metadata, thumbnails)</li>
+                </ul>
+                <pre><code class="small-text">Catalog
+├── Collection (Landsat-8)
+│   ├── Item (Scene from 2024-01-01)
+│   │   ├── Asset (Band 1)
+│   │   └── Asset (Thumbnail)</code></pre>
+                <p class="small-text">Reference: <a href="STAC/stac-training-guide.md" target="_blank">STAC/stac-training-guide.md</a></p>
+            </section>
+            
+            <!-- STAC Slide 3: VEDA STAC API -->
+            <section>
+                <h2>2. STAC Browser: Working with VEDA STAC</h2>
+                <ul>
+                    <li><span class="highlight-blue">API Endpoint:</span> <code>https://openveda.cloud/api/stac/</code></li>
+                    <li><span class="highlight-blue">Collections:</span> NASA disasters, air quality, climate data</li>
+                    <li><span class="highlight-blue">Search:</span> Spatial, temporal, and property-based queries</li>
+                    <li><span class="highlight-blue">Python Access:</span> Using pystac-client library</li>
+                </ul>
+                <pre><code class="python small-text">from pystac_client import Client
+veda_stac = Client.open("https://openveda.cloud/api/stac/")
+search = veda_stac.search(collections=["air-quality-no2"])</code></pre>
+                <p class="small-text">Full guide: <a href="STAC/stac-training-guide.md" target="_blank">STAC/stac-training-guide.md</a></p>
+            </section>
+            
+            <!-- GITHUB/GIT SLIDES -->
+            <!-- Git Slide 1: Version Control Fundamentals -->
+            <section>
+                <h2>3. GitHub/Git: Version Control Fundamentals</h2>
+                <ul>
+                    <li><span class="highlight-blue">Git:</span> Distributed version control system tracking code changes</li>
+                    <li><span class="highlight-blue">GitHub:</span> Cloud-based hosting for Git repositories</li>
+                    <li><span class="highlight-blue">Benefits:</span> Version history, collaboration, backup, documentation</li>
+                    <li><span class="highlight-blue">Setup:</span> Install via Homebrew or Xcode on macOS</li>
+                </ul>
+                <pre><code class="bash small-text"># Initial configuration
+git config --global user.name "Your Name"
+git config --global user.email "email@example.com"</code></pre>
+                <p class="small-text">Guide: <a href="Github/git-github-comprehensive-guide.md" target="_blank">Github/git-github-comprehensive-guide.md</a></p>
+            </section>
+            
+            <!-- Git Slide 2: Essential Commands -->
+            <section>
+                <h2>3. GitHub/Git: Essential Commands</h2>
+                <ul>
+                    <li><span class="highlight-blue">Basic:</span> <code>init</code>, <code>clone</code>, <code>status</code>, <code>log</code></li>
+                    <li><span class="highlight-blue">Changes:</span> <code>add</code>, <code>commit</code>, <code>diff</code>, <code>reset</code></li>
+                    <li><span class="highlight-blue">Branching:</span> <code>branch</code>, <code>checkout</code>, <code>merge</code></li>
+                    <li><span class="highlight-blue">Remotes:</span> <code>push</code>, <code>pull</code>, <code>fetch</code></li>
+                </ul>
+                <pre><code class="bash small-text"># Daily workflow
+git checkout -b feature/new-feature
+git add .
+git commit -m "Add feature"
+git push origin feature/new-feature</code></pre>
+                <p class="small-text">Reference: <a href="Github/git-github-comprehensive-guide.md" target="_blank">Github/git-github-comprehensive-guide.md</a></p>
+            </section>
+            
+            <!-- Git Slide 3: GitHub Collaboration -->
+            <section>
+                <h2>3. GitHub/Git: Collaboration Features</h2>
+                <ul>
+                    <li><span class="highlight-blue">Pull Requests:</span> Code review and discussion</li>
+                    <li><span class="highlight-blue">Issues:</span> Track bugs and feature requests</li>
+                    <li><span class="highlight-blue">GitHub CLI:</span> <code>gh</code> command for GitHub operations</li>
+                    <li><span class="highlight-blue">Best Practices:</span> Branch protection, code reviews, CI/CD</li>
+                </ul>
+                <pre><code class="bash small-text"># GitHub CLI examples
+gh repo create my-project --public
+gh pr create --title "New feature"
+gh issue list --assignee @me</code></pre>
+                <p class="small-text">Full guide: <a href="Github/git-github-comprehensive-guide.md" target="_blank">Github/git-github-comprehensive-guide.md</a></p>
+            </section>
+            
+            <!-- JUPYTERHUB SLIDES -->
+            <!-- JupyterHub Slide 1: Accessing Disasters Hub -->
+            <section>
+                <h2>4. JupyterHub: Accessing the Disasters Hub</h2>
+                <ul>
+                    <li><span class="highlight-blue">URL:</span> <a href="https://hub.disasters.2i2c.cloud/" target="_blank">https://hub.disasters.2i2c.cloud/</a></li>
+                    <li><span class="highlight-blue">Authentication:</span> GitHub, Google, or institutional login</li>
+                    <li><span class="highlight-blue">Server Options:</span> Small (2CPU/4GB) to Large (8CPU/16GB)</li>
+                    <li><span class="highlight-blue">Features:</span> Pre-configured environments, persistent storage</li>
+                </ul>
+                <p>No installation required - everything runs in your browser!</p>
+                <p class="small-text">Guide: <a href="Jupyterhub/jupyterhub-training-guide.md" target="_blank">Jupyterhub/jupyterhub-training-guide.md</a></p>
+            </section>
+            
+            <!-- JupyterHub Slide 2: Working with Notebooks -->
+            <section>
+                <h2>4. JupyterHub: Working with Notebooks</h2>
+                <ul>
+                    <li><span class="highlight-blue">Cell Types:</span> Code, Markdown, Raw</li>
+                    <li><span class="highlight-blue">Kernels:</span> Python 3, R, Julia computational engines</li>
+                    <li><span class="highlight-blue">Shortcuts:</span> Shift+Enter (run), A/B (insert), DD (delete)</li>
+                    <li><span class="highlight-blue">Extensions:</span> Variable inspector, TOC, Git integration</li>
+                </ul>
+                <pre><code class="python small-text"># Install packages in notebook
+!pip install pandas geopandas
+import pandas as pd</code></pre>
+                <p class="small-text">Reference: <a href="Jupyterhub/jupyterhub-training-guide.md" target="_blank">Jupyterhub/jupyterhub-training-guide.md</a></p>
+            </section>
+            
+            <!-- JupyterHub Slide 3: Resource Management -->
+            <section>
+                <h2>4. JupyterHub: Resource Management</h2>
+                <ul>
+                    <li><span class="highlight-blue">Storage:</span> Home directory (10-100GB persistent)</li>
+                    <li><span class="highlight-blue">Cloud Integration:</span> AWS S3, Google Cloud Storage</li>
+                    <li><span class="highlight-blue">Monitoring:</span> CPU, memory, disk usage tracking</li>
+                    <li><span class="highlight-blue">Best Practice:</span> Clear outputs, use efficient data types</li>
+                </ul>
+                <pre><code class="python small-text"># Check resources
+import psutil
+print(f"RAM: {psutil.virtual_memory().percent}%")
+print(f"CPU: {psutil.cpu_percent()}%")</code></pre>
+                <p class="small-text">Full guide: <a href="Jupyterhub/jupyterhub-training-guide.md" target="_blank">Jupyterhub/jupyterhub-training-guide.md</a></p>
+            </section>
+            
+            <!-- DATA INGEST SLIDES -->
+            <!-- Data Ingest Slide 1: Configuration-Driven Ingestion -->
+            <section>
+                <h2>5. Data Ingest: Configuration-Driven Approach</h2>
+                <ul>
+                    <li><span class="highlight-blue">Method:</span> JSON configuration files control ingestion</li>
+                    <li><span class="highlight-blue">Config Types:</span> Collection, Dataset, Discovery, Transfer</li>
+                    <li><span class="highlight-blue">Benefits:</span> Standardized, repeatable, version-controlled</li>
+                    <li><span class="highlight-blue">S3 Organization:</span> Structured bucket hierarchy</li>
+                </ul>
+                <pre><code class="json small-text">{
+  "collection": "dataset-id",
+  "bucket": "ghgc-data-store",
+  "prefix": "transformed_cogs/"
+}</code></pre>
+                <p class="small-text">Guide: <a href="Data-ingest/dataset-ingestion-config-guide.md" target="_blank">Data-ingest/dataset-ingestion-config-guide.md</a></p>
+            </section>
+            
+            <!-- Data Ingest Slide 2: COG Transformation -->
+            <section>
+                <h2>5. Data Ingest: COG Transformation Pipeline</h2>
+                <ul>
+                    <li><span class="highlight-blue">COG:</span> Cloud Optimized GeoTIFF format</li>
+                    <li><span class="highlight-blue">Process:</span> Raw data → Transform → COG → S3</li>
+                    <li><span class="highlight-blue">Compression:</span> DEFLATE with appropriate predictors</li>
+                    <li><span class="highlight-blue">Validation:</span> <code>rio cogeo validate file.tif</code></li>
+                </ul>
+                <pre><code class="python small-text">COG_PROFILE = {
+    "driver": "COG",
+    "compress": "DEFLATE",
+    "blocksize": 512
+}</code></pre>
+                <p class="small-text">Examples: <a href="Data-ingest/cog-conversions.md" target="_blank">Data-ingest/cog-conversions.md</a></p>
+            </section>
+            
+            <!-- Data Ingest Slide 3: STAC Collection Management -->
+            <section>
+                <h2>5. Data Ingest: STAC Collection Management</h2>
+                <ul>
+                    <li><span class="highlight-blue">Metadata:</span> Spatial/temporal extents, licensing</li>
+                    <li><span class="highlight-blue">Discovery:</span> Pattern-based file matching with regex</li>
+                    <li><span class="highlight-blue">Automation:</span> Airflow DAGs for pipeline orchestration</li>
+                    <li><span class="highlight-blue">API Access:</span> STAC and Raster APIs for data retrieval</li>
+                </ul>
+                <pre><code class="small-text">GET /api/stac/collections/{collection-id}
+POST /api/raster/collections/{id}/statistics</code></pre>
+                <p class="small-text">Reference: <a href="Data-ingest/dataset-ingestion-config-guide.md" target="_blank">Data-ingest/dataset-ingestion-config-guide.md</a></p>
+            </section>
+            
+            <!-- DATA VISUALIZATION SLIDES (Placeholder) -->
+            <!-- Data Viz Slide 1 -->
+            <section>
+                <h2>6. Data Visualization: Tools Overview</h2>
+                <ul>
+                    <li><span class="highlight-blue">VEDA Colors:</span> Standardized color schemes for consistency</li>
+                    <li><span class="highlight-blue">Matplotlib:</span> Static plots and charts</li>
+                    <li><span class="highlight-blue">Folium:</span> Interactive web maps</li>
+                    <li><span class="highlight-blue">Plotly:</span> Interactive visualizations</li>
+                    <li><span class="highlight-blue">Render Config:</span> Colormaps and rescaling in STAC</li>
+                </ul>
+                <p class="center small-text">Note: Documentation in progress</p>
+                <p class="small-text">Colors reference: <a href="Data-visualization/veda-colors.txt" target="_blank">Data-visualization/veda-colors.txt</a></p>
+            </section>
+            
+            <!-- Data Viz Slide 2 -->
+            <section>
+                <h2>6. Data Visualization: Creating Interactive Maps</h2>
+                <ul>
+                    <li><span class="highlight-blue">Base Maps:</span> OpenStreetMap, satellite imagery</li>
+                    <li><span class="highlight-blue">Overlays:</span> GeoJSON, raster tiles, markers</li>
+                    <li><span class="highlight-blue">Controls:</span> Zoom, pan, layer switching</li>
+                    <li><span class="highlight-blue">Export:</span> HTML, PNG, or embed in notebooks</li>
+                </ul>
+                <pre><code class="python small-text">import folium
+m = folium.Map(location=[0, 0], zoom_start=2)
+m.save('map.html')</code></pre>
+                <p class="small-text">Examples in notebooks: <a href="Jupyterhub/s3-bucket-crawler.ipynb" target="_blank">Jupyterhub/s3-bucket-crawler.ipynb</a></p>
+            </section>
+            
+            <!-- Data Viz Slide 3 -->
+            <section>
+                <h2>6. Data Visualization: Best Practices</h2>
+                <ul>
+                    <li><span class="highlight-blue">Color Choice:</span> Consider colorblind accessibility</li>
+                    <li><span class="highlight-blue">Scale:</span> Appropriate data ranges and normalization</li>
+                    <li><span class="highlight-blue">Performance:</span> Optimize for large datasets</li>
+                    <li><span class="highlight-blue">Documentation:</span> Clear legends and labels</li>
+                    <li><span class="highlight-blue">Interactivity:</span> Tooltips and clickable features</li>
+                </ul>
+                <p class="center">Effective visualization tells the data story</p>
+                <p class="small-text">More coming soon in Data-visualization/</p>
+            </section>
+            
+            <!-- RESOURCES SLIDE -->
+            <section>
+                <h2>Quick Reference: Documentation Links</h2>
+                <h3>Training Guides</h3>
+                <ul class="small-text">
+                    <li>📚 <a href="STAC/stac-training-guide.md" target="_blank">STAC/stac-training-guide.md</a> - STAC fundamentals and VEDA integration</li>
+                    <li>🔧 <a href="Github/git-github-comprehensive-guide.md" target="_blank">Github/git-github-comprehensive-guide.md</a> - Git version control and GitHub</li>
+                    <li>📓 <a href="Jupyterhub/jupyterhub-training-guide.md" target="_blank">Jupyterhub/jupyterhub-training-guide.md</a> - JupyterHub Disasters Hub</li>
+                    <li>📊 <a href="Data-ingest/dataset-ingestion-config-guide.md" target="_blank">Data-ingest/dataset-ingestion-config-guide.md</a> - Dataset ingestion</li>
+                    <li>🌍 <a href="Data-ingest/cog-conversions.md" target="_blank">Data-ingest/cog-conversions.md</a> - COG conversion guide</li>
+                </ul>
+                <h3>Additional Resources</h3>
+                <ul class="small-text">
+                    <li>🔐 <a href="AWS/aws-mfa-setup.md" target="_blank">AWS/aws-mfa-setup.md</a> - AWS MFA configuration</li>
+                    <li>📝 <a href="README.md" target="_blank">README.md</a> - Repository overview</li>
+                    <li>🎨 <a href="Data-visualization/veda-colors.txt" target="_blank">Data-visualization/veda-colors.txt</a> - VEDA color schemes</li>
+                    <li>📔 <a href="Jupyterhub/s3-bucket-crawler.ipynb" target="_blank">Jupyterhub/s3-bucket-crawler.ipynb</a> - S3 example notebook</li>
+                </ul>
+                <p class="center small-text">🌐 VEDA Platform: <a href="https://docs.openveda.cloud/" target="_blank">https://docs.openveda.cloud/</a></p>
+            </section>
+            
+            <!-- End Slide -->
+            <section>
+                <h1>Thank You!</h1>
+                <p class="center">Ready to explore VEDA?</p>
+                <p class="center">Start with the JupyterHub Disasters Hub:</p>
+                <p class="center"><a href="https://hub.disasters.2i2c.cloud/" target="_blank">https://hub.disasters.2i2c.cloud/</a></p>
+                <br>
+                <p class="center small-text">Questions? Check the documentation or reach out to the VEDA team</p>
+            </section>
+            
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/markdown/markdown.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: false,
+            transition: 'slide',
+            plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+        });
+    </script>
+</body>
+</html>
