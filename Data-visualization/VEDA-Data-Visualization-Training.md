@@ -250,6 +250,7 @@ layers:
 ```
 
 #### Layer Comparison
+{% raw %}
 ```jsx
 <CompareImage
   leftLayer={{
@@ -262,6 +263,7 @@ layers:
   }}
 />
 ```
+{% endraw %}
 
 ### Chart Components
 
@@ -275,6 +277,7 @@ layers:
 ```
 
 #### Statistical Charts
+{% raw %}
 ```jsx
 <Chart
   type="bar | line | scatter | histogram"
@@ -286,6 +289,7 @@ layers:
   }}
 />
 ```
+{% endraw %}
 
 ### Interactive Elements
 
