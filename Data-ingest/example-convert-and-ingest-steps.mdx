@@ -1,0 +1,265 @@
+## Ingestion of mangrove data from EarthDATA search 
+
+### [Mangrove URL](https://search.earthdata.nasa.gov/search/granules?p=C2389107206-ORNL_CLOUD&pg[0][v]=f&pg[0][gsk]=-start_date&g=G2389114270-ORNL_CLOUD&q=Global%20Mangrove%20Distribution%2C%20Aboveground%20Biomass%2C%20and%20Canopy%20Height&tl=1176897600!5!!&lat=15.386655&long=95.7358&zoom=5.994745527850469)
+
+### [Data info](https://daac.ornl.gov/CMS/guides/CMS_Global_Map_Mangrove_Canopy.html)
+
+## Process to ingest
+
+1.) [Download from website](https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1665)
+
+2.) Add unzipped contents to directory "/Users/klesinger/Google Drive/My Drive/INGEST_DOCS/coastal-zones/biomass/CMS_Global_Map_Mangrove_Canopy_1665"
+
+3.) Run notebook convert_mangrove_to_cog.ipynb to convert all the files to COG and send to S3 bucket
+
+4.) Check that one of the files is a valid endpoint using the [COG Viewer](https://dev.openveda.cloud/api/raster/cog/viewer)
+e.g., s3://veda-data-store-staging/coastal-zones/mangrove-canopy-biomass-distribution/Mangrove_agb_Haiti_2000-01-01day_2009-12-31.tif
+
+5.) Run the [sm2a-dev-SM2A](https://sm2a.dev.openveda.cloud/home) airflow instance with `veda_dataset-pipeline` to find the objects in the s3 bucket and ingest into `/dev`. This config file will work<br />  
+
+## Variable 1
+```
+{
+    "assets": {},
+    "collection": "mangrove-biomass-abg",
+    "data_type": "cog",
+    "description": "Global above ground biomass of mangrove-forested wetlands based on remotely sensed and in situ field measurement data.",
+    "discovery_items": [
+        {
+            "bucket": "veda-data-store-dev",
+            "cogify": false,
+            "discovery": "s3",
+            "dry_run": false,
+            "filename_regex": "(.*)Mangrove_agb_(.*)\\.tif$",
+            "prefix": "coastal-zones/mangrove-canopy-biomass-distribution/",
+            "upload": false
+        }
+    ],
+    "is_periodic": false,
+    "item_assets": {
+        "cog_default": {
+            "description": "Cloud optimized default layer to display on map",
+            "roles": [
+                "data",
+                "layer"
+            ],
+            "title": "Default COG Layer",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+    },
+    "license": "CC0-1.0",
+    "providers": [
+        {
+            "name": "NASA VEDA",
+            "roles": [
+                "host"
+            ],
+            "url": "https://www.earthdata.nasa.gov/dashboard/"
+        }
+    ],
+    "renders": {
+        "dashboard": {
+            "assets": [
+                "cog_default"
+            ],
+            "bidx": [
+                1
+            ],
+            "colormap_name": "viridis",
+            "resampling": "nearest",
+            "rescale": [
+                [
+                    0,
+                    911
+                ]
+            ],
+            "title": "VEDA Dashboard Render Parameters"
+        }
+    },
+    "sample_files": [
+        "s3://veda-data-store-dev/coastal-zones/mangrove-canopy-biomass-distribution/Mangrove_agb_ReunionAndMauritius_2000-01-01day_2009-12-31.tif"
+    ],
+    "spatial_extent": {
+        "xmax": 180.0,
+        "xmin": -180.0,
+        "ymax": 31.0001,
+        "ymin": -39.0001
+    },
+    "stac_extensions": [
+        "https://stac-extensions.github.io/render/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+    ],
+    "stac_version": "1.0.0",
+    "temporal_extent": {
+        "enddate": "2009-12-31T23:59:59Z",
+        "startdate": "2000-01-01T00:00:00Z"
+    },
+    "time_density": "year",
+    "title": "Global Mangrove Aboveground Biomass"
+}
+```
+
+## Variable 2
+```
+{
+    "assets": {},
+    "collection": "mangrove-basal-area-height",
+    "data_type": "cog",
+    "description": "Mangrove basal-area weighted height (individual tree heights weighted in proportion to their basal area).",
+    "discovery_items": [
+        {
+            "bucket": "veda-data-store-dev",
+            "cogify": false,
+            "discovery": "s3",
+            "dry_run": false,
+            "filename_regex": "(.*)Mangrove_hba95_(.*)\\.tif$",
+            "prefix": "coastal-zones/mangrove-canopy-biomass-distribution/",
+            "upload": false
+        }
+    ],
+    "is_periodic": false,
+    "item_assets": {
+        "cog_default": {
+            "description": "Cloud optimized default layer to display on map",
+            "roles": [
+                "data",
+                "layer"
+            ],
+            "title": "Default COG Layer",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+    },
+    "license": "CC0-1.0",
+    "providers": [
+        {
+            "name": "NASA VEDA",
+            "roles": [
+                "host"
+            ],
+            "url": "https://www.earthdata.nasa.gov/dashboard/"
+        }
+    ],
+    "renders": {
+        "dashboard": {
+            "assets": [
+                "cog_default"
+            ],
+            "bidx": [
+                1
+            ],
+            "colormap_name": "viridis",
+            "resampling": "nearest",
+            "rescale": [
+                [
+                    0,
+                    40
+                ]
+            ],
+            "title": "VEDA Dashboard Render Parameters"
+        }
+    },
+    "sample_files": [
+        "s3://veda-data-store-dev/coastal-zones/mangrove-canopy-biomass-distribution/Mangrove_hgb95_ReunionAndMauritius_2000-01-01day_2009-12-31.tif"
+    ],
+    "spatial_extent": {
+        "xmax": 180.0,
+        "xmin": -180.0,
+        "ymax": 31.0001,
+        "ymin": -39.0001
+    },
+    "stac_extensions": [
+        "https://stac-extensions.github.io/render/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+    ],
+    "stac_version": "1.0.0",
+    "temporal_extent": {
+        "enddate": "2009-12-31T23:59:59Z",
+        "startdate": "2000-01-01T00:00:00Z"
+    },
+    "time_density": "year",
+    "title": "Global Mangrove basal-area weighted height"
+}
+```
+
+## Variable 3
+
+```
+{
+    "assets": {},
+    "collection": "mangrove-max-height",
+    "data_type": "cog",
+    "description": "Mangrove canopy maximum height (height of the tallest tree)",
+    "discovery_items": [
+        {
+            "bucket": "veda-data-store-dev",
+            "cogify": false,
+            "discovery": "s3",
+            "dry_run": false,
+            "filename_regex": "(.*)Mangrove_hmax95_(.*)\\.tif$",
+            "prefix": "coastal-zones/mangrove-canopy-biomass-distribution/",
+            "upload": false
+        }
+    ],
+    "is_periodic": false,
+    "item_assets": {
+        "cog_default": {
+            "description": "Cloud optimized default layer to display on map",
+            "roles": [
+                "data",
+                "layer"
+            ],
+            "title": "Default COG Layer",
+            "type": "image/tiff; application=geotiff; profile=cloud-optimized"
+        }
+    },
+    "license": "CC0-1.0",
+    "providers": [
+        {
+            "name": "NASA VEDA",
+            "roles": [
+                "host"
+            ],
+            "url": "https://www.earthdata.nasa.gov/dashboard/"
+        }
+    ],
+    "renders": {
+        "dashboard": {
+            "assets": [
+                "cog_default"
+            ],
+            "bidx": [
+                1
+            ],
+            "colormap_name": "viridis",
+            "resampling": "nearest",
+            "rescale": [
+                [
+                    0,
+                    63
+                ]
+            ],
+            "title": "VEDA Dashboard Render Parameters"
+        }
+    },
+    "sample_files": [
+        "s3://veda-data-store-dev/coastal-zones/mangrove-canopy-biomass-distribution/Mangrove_hmax95_ReunionAndMauritius_2000-01-01day_2009-12-31.tif"
+    ],
+    "spatial_extent": {
+        "xmax": 180.0,
+        "xmin": -180.0,
+        "ymax": 31.0001,
+        "ymin": -39.0001
+    },
+    "stac_extensions": [
+        "https://stac-extensions.github.io/render/v1.0.0/schema.json",
+        "https://stac-extensions.github.io/item-assets/v1.0.0/schema.json"
+    ],
+    "stac_version": "1.0.0",
+    "temporal_extent": {
+        "enddate": "2009-12-31T23:59:59Z",
+        "startdate": "2000-01-01T00:00:00Z"
+    },
+    "time_density": "year",
+    "title": "Global Mangrove Maximum Height of Tallest Tree"
+}
+```
